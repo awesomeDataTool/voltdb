@@ -137,12 +137,14 @@ public class NonDdlBatchPlanner {
         try {
             return ptool.planSqlCalcite(task);
         } catch (PlannerFallbackException ex) {
+            ex.printStackTrace();
             // Let go the PlannerFallbackException so we can fall back to the legacy planner.
             throw ex;
         } catch (ValidationException vex) {
             throw new PlannerFallbackException();
         } catch (Exception ex) {
             Throwable cause = ex.getCause();
+            ex.printStackTrace();
             while(cause != null && cause.getCause() != null) {
                 cause = cause.getCause();
             }
